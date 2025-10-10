@@ -9,12 +9,12 @@
 <%
     try (Connection conn = DBConnection.getConnection()) {
         if (conn != null) {
-            out.println("<h2 style='color:green;'>✅ Database connected successfully!</h2>");
+            out.println("<h2 style='color:green;'>Database connected successfully!</h2>");
         } else {
-            out.println("<h2 style='color:red;'>❌ Connection failed.</h2>");
+            out.println("<h2 style='color:red;'>Connection failed.</h2>");
         }
     } catch (Exception e) {
-        out.println("<h2 style='color:red;'>❌ Error: " + e.getMessage() + "</h2>");
+        out.println("<h2 style='color:red;'>Error: " + e.getMessage() + "</h2>");
         e.printStackTrace();
     }
 %>
