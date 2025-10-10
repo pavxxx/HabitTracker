@@ -1,15 +1,15 @@
 package servlets;
 
 import dao.HabitDAO;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 @WebServlet("/DashboardServlet")
-public class DashboardServlet extends HttpServlet {
+public class dashboardservlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

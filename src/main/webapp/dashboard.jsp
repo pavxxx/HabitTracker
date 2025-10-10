@@ -125,7 +125,8 @@
       <div class="nav-buttons">
         <a href="addhabit.jsp">Add Habit</a>
         <a href="history.jsp">History</a>
-        <a href="LogoutServlet">Logout</a>
+        <a href="logout.jsp">Logout</a>
+
       </div>
     </div>
   </div>

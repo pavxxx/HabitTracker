@@ -1,14 +1,14 @@
 package servlets;
 
 import dao.HabitDAO;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
 @WebServlet("/AddHabitServlet")
-public class AddHabitServlet extends HttpServlet {
+public class addhabitservlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

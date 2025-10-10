@@ -2,6 +2,7 @@ package dao;
 
 import db.DBConnection;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -86,4 +87,16 @@ public class HabitDAO {
             return false;
         }
     }
+    public static void markDone(int habitId) {
+    	String sql = "UPDATE habits SET completed = 1 WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, habitId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception or log error as needed
+        }
+    }
+
 }

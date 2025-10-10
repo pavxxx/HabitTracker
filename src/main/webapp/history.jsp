@@ -99,7 +99,7 @@
       <div class="nav-buttons">
         <a href="dashboard.jsp">Dashboard</a>
         <a href="addhabit.jsp">Add Habit</a>
-        <a href="LogoutServlet">Logout</a>
+        <a href="logout.jsp">Logout</a>
       </div>
     </div>
   </div>

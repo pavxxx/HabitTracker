@@ -6,9 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import java.io.IOException;
 
 @WebServlet("/LoginServlet")
@@ -22,7 +21,11 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("userId", UserDAO.getUserId(username));
             session.setAttribute("username", username);
-            response.sendRedirect("DashboardServlet");
+
+            // Update the destination below to match your dashboard
+            response.sendRedirect("dashboard.jsp"); 
+            // Or: response.sendRedirect("DashboardServlet"); 
+            // Or: response.sendRedirect("dashboard"); 
         } else {
             request.setAttribute("error", "Invalid username or password");
             request.getRequestDispatcher("login.jsp").forward(request, response);

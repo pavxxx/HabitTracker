@@ -1,9 +1,11 @@
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+package servlets;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet {
+public class logoutservlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
         response.sendRedirect("login.jsp"); // Or a custom logout page
