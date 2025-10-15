@@ -4,7 +4,7 @@ import db.DBConnection;
 import java.sql.*;
 
 public class UserDAO {
-    
+
     public static boolean registerUser(String username, String password) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -12,12 +12,13 @@ public class UserDAO {
             stmt.setString(1, username);
             stmt.setString(2, password);
             return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
+    // Validates user login (returns true if user exists with matching password)
     public static boolean isValidUser(String username, String password) {
         String sql = "SELECT id FROM users WHERE username = ? AND password = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -26,12 +27,12 @@ public class UserDAO {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             return rs.next();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     public static int getUserId(String username) {
         String sql = "SELECT id FROM users WHERE username = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -41,7 +42,7 @@ public class UserDAO {
             if (rs.next()) {
                 return rs.getInt("id");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;

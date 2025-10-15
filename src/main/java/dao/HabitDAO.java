@@ -7,7 +7,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class HabitDAO {
-    
+
+    // Add a new habit for a user
     public static boolean addHabit(int userId, String habitName, LocalDate date) {
         String sql = "INSERT INTO habits (user_id, habit_name, habit_date, completed) VALUES (?, ?, ?, false)";
         try (Connection conn = DBConnection.getConnection();
@@ -21,7 +22,8 @@ public class HabitDAO {
             return false;
         }
     }
-    
+
+    // Get all habits for today
     public static List<Map<String, Object>> getTodayHabits(int userId) {
         String sql = "SELECT * FROM habits WHERE user_id = ? AND habit_date = CURDATE()";
         List<Map<String, Object>> habits = new ArrayList<>();
@@ -42,7 +44,8 @@ public class HabitDAO {
         }
         return habits;
     }
-    
+
+    // Get all habits (for history, analytics, etc)
     public static List<Map<String, Object>> getAllHabits(int userId) {
         String sql = "SELECT * FROM habits WHERE user_id = ? ORDER BY habit_date DESC";
         List<Map<String, Object>> habits = new ArrayList<>();
@@ -63,7 +66,8 @@ public class HabitDAO {
         }
         return habits;
     }
-    
+
+    // Mark a habit as completed
     public static boolean markAsCompleted(int habitId) {
         String sql = "UPDATE habits SET completed = true WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -75,7 +79,8 @@ public class HabitDAO {
             return false;
         }
     }
-    
+
+    // Delete a habit by id
     public static boolean deleteHabit(int habitId) {
         String sql = "DELETE FROM habits WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -87,16 +92,4 @@ public class HabitDAO {
             return false;
         }
     }
-    public static void markDone(int habitId) {
-    	String sql = "UPDATE habits SET completed = 1 WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, habitId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle exception or log error as needed
-        }
-    }
-
 }

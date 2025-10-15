@@ -13,7 +13,7 @@ public class updatehabitservlet extends HttpServlet {
         String hid = req.getParameter("habitId");
         if (hid != null) {
             int habitId = Integer.parseInt(hid);
-            HabitDAO.markDone(habitId);
+            HabitDAO.markAsCompleted(habitId);
         }
         resp.sendRedirect("DashboardServlet");
     }

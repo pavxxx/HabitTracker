@@ -7,7 +7,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/RegisterServlet")
-public class registerservlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String username = request.getParameter("username");

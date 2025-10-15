@@ -13,7 +13,7 @@ public class DBConnection {
             
             // Create connection
             conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/habit_tracker?useSSL=false&serverTimezone=UTC",
+            	"jdbc:mysql://localhost:3306/habit_tracker?useSSL=false",
                 "root", 
                 "Pavxx@02"
             );
