@@ -111,6 +111,27 @@
       font-style: italic;
       padding: 40px 0;
     }
+    .progress-container {
+      margin-bottom: 18px;
+    }
+    .progress-label {
+      font-size:1.08em;
+      margin-bottom:6px;
+      color:#555;
+    }
+    .progress-bar-bg {
+      background:#eee;
+      border-radius:16px;
+      overflow:hidden;
+      height:18px;
+      width:100%;
+    }
+    .progress-bar-fill {
+      background: #6a7b5f;
+      height: 100%;
+      width: 0%;
+      transition: width 1s cubic-bezier(.4,2,.6,1);
+    }
   </style>
 </head>
 <body>
@@ -132,7 +153,26 @@
       <%
         Integer userId = (Integer) session.getAttribute("userId");
         List<Map<String, Object>> habits = HabitDAO.getTodayHabits(userId);
-        if (habits != null && !habits.isEmpty()) {
+        int totalHabits = habits != null ? habits.size() : 0;
+        int completedHabits = 0;
+        if (habits != null) {
+          for (Map<String, Object> habit : habits) {
+            if ((Boolean)habit.get("completed")) completedHabits++;
+          }
+        }
+        int percent = (totalHabits == 0) ? 0 : (int)(((double)completedHabits / totalHabits) * 100);
+      %>
+      <% if (totalHabits > 0) { %>
+        <div class="progress-container">
+          <div class="progress-label">
+            Completion: <%= completedHabits %> / <%= totalHabits %> habits (<%= percent %>%)
+          </div>
+          <div class="progress-bar-bg">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+          </div>
+        </div>
+      <% } %>
+      <% if (habits != null && !habits.isEmpty()) {
           for (Map<String, Object> habit : habits) {
       %>
       <div class="habit-item">
@@ -166,5 +206,16 @@
       <% } %>
     </div>
   </div>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      var fill = document.getElementById('progressBarFill');
+      if (fill) {
+        var percent = <%= percent %>;
+        setTimeout(function() {
+          fill.style.width = percent + "%";
+        }, 300); // smooth fill animation
+      }
+    });
+  </script>
 </body>
 </html>
