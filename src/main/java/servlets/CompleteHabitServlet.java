@@ -17,10 +17,13 @@ public class CompleteHabitServlet extends HttpServlet {
         }
         
         String habitIdStr = request.getParameter("habitId");
-        if (habitIdStr != null) {
+        if (habitIdStr != null && !habitIdStr.trim().isEmpty()) {
             int habitId = Integer.parseInt(habitIdStr);
             HabitDAO.markAsCompleted(habitId);
         }
-        response.sendRedirect("DashboardServlet");
+        // Redirect to dashboard (shows status) or to history page after completion
+        response.sendRedirect("dashboard.jsp");
+        // If you want to go to history immediately, use:
+        // response.sendRedirect("history.jsp");
     }
 }

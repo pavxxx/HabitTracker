@@ -38,11 +38,11 @@
       padding: 8px 16px;
       border-radius: 8px;
       margin-left: 12px;
-      background: rgba(255,255,255,0.1);
+      background: #6a7b5f;
       transition: background 0.2s;
     }
     .nav-buttons a:hover {
-      background: rgba(255,255,255,0.2);
+      background: #222;
     }
     .main-container {
       max-width: 1200px;
@@ -79,36 +79,31 @@
     .habit-actions {
       display: flex;
       gap: 8px;
+      align-items: center;
     }
     .btn {
       padding: 8px 16px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       cursor: pointer;
       transition: background 0.2s;
-    }
-    .btn-primary {
-      background: #77896c;
-      color: white;
-    }
-    .btn-primary:hover {
-      background: #6a7b5f;
+      font-family: inherit;
     }
     .btn-success {
-      background: #28a745;
+      background: #6a7b5f;
       color: white;
     }
     .btn-success:hover {
-      background: #218838;
+      background: #222;
     }
     .btn-danger {
-      background: #dc3545;
+      background: #b94a48;
       color: white;
     }
     .btn-danger:hover {
-      background: #c82333;
+      background: #900;
     }
     .empty-state {
       text-align: center;
@@ -123,35 +118,42 @@
     <div class="container">
       <h1>Habit Tracker</h1>
       <div class="nav-buttons">
+        <a href="dashboard.jsp">Dashboard</a>
         <a href="addhabit.jsp">Add Habit</a>
-        <a href="history.jsp">History</a>
+        <a href="HistoryServlet">History</a>
+        <a href="UpcomingHabitsServlet">Upcoming</a>
         <a href="logout.jsp">Logout</a>
-
       </div>
     </div>
   </div>
-
   <div class="main-container">
     <div class="card">
       <h3>Today's Habits</h3>
       <%
-        List<Map<String, Object>> habits = (List<Map<String, Object>>) request.getAttribute("habits");
+        Integer userId = (Integer) session.getAttribute("userId");
+        List<Map<String, Object>> habits = HabitDAO.getTodayHabits(userId);
         if (habits != null && !habits.isEmpty()) {
           for (Map<String, Object> habit : habits) {
       %>
       <div class="habit-item">
-        <div class="habit-name"><%= habit.get("habitName") %></div>
+        <div>
+          <div class="habit-name"><%= habit.get("habitName") %></div>
+          <div style="font-size:0.95em; color:#555;">Date: <%= habit.get("date") %></div>
+        </div>
         <div class="habit-actions">
-          <% if ((Boolean) habit.get("completed")) { %>
+          <% if ((Boolean)habit.get("completed")) { %>
             <span style="color: #28a745; font-weight: 500;">✓ Completed</span>
           <% } else { %>
-            <form action="CompleteHabitServlet" method="post" style="display: inline;">
+            <form action="CompleteHabitServlet" method="post" style="display:inline;">
               <input type="hidden" name="habitId" value="<%= habit.get("id") %>">
               <button type="submit" class="btn btn-success">Complete</button>
             </form>
           <% } %>
-          <a href="DeleteHabitServlet?id=<%= habit.get("id") %>" class="btn btn-danger" 
-             onclick="return confirm('Delete this habit?')">Delete</a>
+          <form action="DeleteHabitServlet" method="get" style="display:inline;">
+            <input type="hidden" name="id" value="<%= habit.get("id") %>">
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Delete this habit?')">Delete</button>
+          </form>
         </div>
       </div>
       <% 

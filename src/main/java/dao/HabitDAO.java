@@ -44,6 +44,31 @@ public class HabitDAO {
         }
         return habits;
     }
+    
+    //completed habits
+    public static List<Map<String, Object>> getCompletedHabits(int userId) {
+        String sql = "SELECT * FROM habits WHERE user_id = ? AND completed = true ORDER BY habit_date DESC";
+        List<Map<String, Object>> habits = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> habit = new HashMap<>();
+                habit.put("id", rs.getInt("id"));
+                habit.put("habitName", rs.getString("habit_name"));
+                habit.put("completed", rs.getBoolean("completed"));
+                habit.put("date", rs.getDate("habit_date"));
+                habits.add(habit);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return habits;
+    }
+
+
+
 
     // Get all habits (for history, analytics, etc)
     public static List<Map<String, Object>> getAllHabits(int userId) {
@@ -79,6 +104,30 @@ public class HabitDAO {
             return false;
         }
     }
+    
+    //upcoming habits
+    public static List<Map<String, Object>> getUpcomingHabits(int userId) {
+        String sql = "SELECT * FROM habits WHERE user_id = ? AND habit_date > CURDATE() ORDER BY habit_date ASC";
+        List<Map<String, Object>> habits = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> habit = new HashMap<>();
+                habit.put("id", rs.getInt("id"));
+                habit.put("habitName", rs.getString("habit_name"));
+                habit.put("completed", rs.getBoolean("completed"));
+                habit.put("date", rs.getDate("habit_date"));
+                habits.add(habit);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return habits;
+    }
+    
+
 
     // Delete a habit by id
     public static boolean deleteHabit(int habitId) {

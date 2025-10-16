@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @WebServlet("/DashboardServlet")
-public class dashboardservlet extends HttpServlet {
+public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);

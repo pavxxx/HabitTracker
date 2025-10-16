@@ -65,7 +65,9 @@
     <p>Build better habits, track your progress</p>
     <a href="login.jsp" class="custom-btn">Login</a>
     <a href="register.jsp" class="custom-btn secondary">Register</a>
+    <%-- 
     <a href="logout.jsp">Logout</a>
+    --%>
     
   </div>
 </body>

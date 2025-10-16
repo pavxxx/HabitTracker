@@ -119,7 +119,8 @@
       <h1>Add New Habit</h1>
       <div class="nav-buttons">
         <a href="dashboard.jsp">Dashboard</a>
-        <a href="history.jsp">History</a>
+        <a href="HistoryServlet">History</a>
+        <a href="UpcomingHabitsServlet">Upcoming</a>
         <a href="logout.jsp">Logout</a>
 
       </div>

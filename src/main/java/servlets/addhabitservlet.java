@@ -8,28 +8,31 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @WebServlet("/AddHabitServlet")
-public class addhabitservlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
-            response.sendRedirect("login.jsp");
+public class AddHabitServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String habitName = req.getParameter("habitName");
+        String habitDateStr = req.getParameter("habitDate");
+        HttpSession session = req.getSession();
+        Integer userId = (Integer) session.getAttribute("userId"); // Set this upon login
+
+        if(userId == null) {
+            resp.sendRedirect("login.jsp");
             return;
         }
-        
-        int userId = (Integer) session.getAttribute("userId");
-        String habitName = request.getParameter("habitName");
-        String dateStr = request.getParameter("habitDate");
-        
-        if (habitName == null || habitName.trim().isEmpty()) {
-            response.sendRedirect("addhabit.jsp");
+
+        if (habitName == null || habitName.trim().isEmpty() || habitDateStr == null || habitDateStr.trim().isEmpty()) {
+            req.setAttribute("error", "Habit and date required");
+            req.getRequestDispatcher("addhabit.jsp").forward(req, resp);
             return;
         }
-        
-        LocalDate date = (dateStr == null || dateStr.isEmpty()) ? 
-            LocalDate.now() : LocalDate.parse(dateStr);
-        
-        HabitDAO.addHabit(userId, habitName.trim(), date);
-        response.sendRedirect("DashboardServlet");
+
+        LocalDate habitDate = LocalDate.parse(habitDateStr);
+        boolean success = HabitDAO.addHabit(userId, habitName.trim(), habitDate);
+        if (success) {
+            resp.sendRedirect("dashboard.jsp");
+        } else {
+            req.setAttribute("error", "Could not save habit");
+            req.getRequestDispatcher("addhabit.jsp").forward(req, resp);
+        }
     }
 }

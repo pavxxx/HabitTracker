@@ -82,12 +82,14 @@
             </h2>
             <a href="login.jsp" class="btn-primary">Login again</a>
         </div>
+        <%--
         <form action="LoginServlet" method="post">
     		<input type="text" name="username" />
     		<input type="password" name="password" />
     		<button type="submit">Login</button>
 		</form>
-        
+        --%>
+    
     </div>
 </body>
 </html>
